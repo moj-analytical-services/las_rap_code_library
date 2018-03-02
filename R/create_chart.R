@@ -2,13 +2,12 @@
 #
 #' This function plots time series data using MoJ styling.
 #' @param timeseries A dataframe
-#' @param title the chart title
 #' @seealso \code{\link{update_pop_series}}
 
 
 #
 
-create_chart <- function(timeseries, title){
+create_chart <- function(timeseries){
 
 timeseries <- timeseries %>% filter(Date >= (max(Date) - lubridate::years(20)))
 
@@ -19,7 +18,7 @@ ggplot2::ggplot(data = timeseries,
          ggplot2::labs(colour = "") + # Remove legend header
          ggplot2::scale_color_manual(values = c("#0000cc", "#00ccff",
                                                 "#0066ff")) + # Set line colours
-         ggplot2::ylab(title) +
+         ggplot2::ylab('title') +
          ggplot2::scale_y_continuous(minor_breaks = seq(0, 100000, 100000),
          breaks = seq(0, 100000, 10000), expand = c(0, 0),
                   labels = scales::comma) + # Format y-axis scale and numbers
