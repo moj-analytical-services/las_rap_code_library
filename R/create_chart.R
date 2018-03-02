@@ -1,4 +1,4 @@
-# create_chart
+# figure1
 #
 #' This function plots time series data using MoJ styling.
 #' @param timeseries A dataframe
@@ -6,8 +6,20 @@
 
 
 #
+#
+# You can learn more about package authoring with RStudio at:
+#
+#   http://r-pkgs.had.co.nz/
+#
+# Some useful keyboard shortcuts for package authoring:
+#
+#   Build and Reload Package:  'Ctrl + Shift + B'
+#   Check Package:             'Ctrl + Shift + E'
+#   Test Package:              'Ctrl + Shift + T'
 
-create_chart <- function(timeseries){
+
+
+figure1 <- function(timeseries){
 
 timeseries <- timeseries %>% filter(Date >= (max(Date) - lubridate::years(20)))
 
@@ -18,7 +30,7 @@ ggplot2::ggplot(data = timeseries,
          ggplot2::labs(colour = "") + # Remove legend header
          ggplot2::scale_color_manual(values = c("#0000cc", "#00ccff",
                                                 "#0066ff")) + # Set line colours
-         ggplot2::ylab('title') +
+         ggplot2::ylab("Prison population") +
          ggplot2::scale_y_continuous(minor_breaks = seq(0, 100000, 100000),
          breaks = seq(0, 100000, 10000), expand = c(0, 0),
                   labels = scales::comma) + # Format y-axis scale and numbers

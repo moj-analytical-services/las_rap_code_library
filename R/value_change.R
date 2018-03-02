@@ -17,11 +17,21 @@
 #
 # This function filters a dataset and returns totals based on a given criteria
 #
+#
+# You can learn more about package authoring with RStudio at:
+#
+#   http://r-pkgs.had.co.nz/
+#
+# Some useful keyboard shortcuts for package authoring:
+#
+#   Build and Reload Package:  'Ctrl + Shift + B'
+#   Check Package:             'Ctrl + Shift + E'
+#   Test Package:              'Ctrl + Shift + T'
 
 value_change <- function (tibble, reference_date, type, format) {
 
-  value1 <- mojrap::value(tibble, "current")
-  value2 <- mojrap::value(tibble, reference_date)
+  value1 <- mojmar::value(tibble, "current")
+  value2 <- mojmar::value(tibble, reference_date)
 
 
   if      (type == "value") {
@@ -39,9 +49,9 @@ value_change <- function (tibble, reference_date, type, format) {
 
   if (format == TRUE) {
     if (type == "perc_diff") {
-      out <- out %>% mojrap::format_perc()
+      out <- out %>% mojmar::format_perc()
       }
-    else (out <- out %>% mojrap::format_num())
+    else (out <- out %>% mojmar::format_num())
   }
 
 
