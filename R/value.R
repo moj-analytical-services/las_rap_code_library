@@ -1,6 +1,6 @@
 # value
 #
-#' Takes a filtered prison dataset and returns the total of a specified quarter.
+#' Takes a filtered dataset and returns the total of a specified quarter.
 #
 #' @param tibble A filter tibble
 #' @param reference_date Either the current date, previous quarter date of previous year date
@@ -10,11 +10,14 @@
 
 #
 # This function filters a dataset and returns totals based on a given criteria
-#
+
+# need to look at swirl to learn dplyr
+
 
 value <- function (tibble, reference_date) {
 
-  group <- dplyr::group_by(tibble, extrdate)
+  group <- dplyr::group_by(tibble, qtrdte)
+  
   tibble2 <- dplyr::summarize(group, volume = sum(volume))
 
   if      (reference_date == "current")    {
@@ -27,6 +30,6 @@ value <- function (tibble, reference_date) {
     sum(tibble2[tibble2 == extract3, "volume"])
     }
   else    print(
-    "Please enter a reference_date as 'previous_q' or 'previous_y'")
+    "Please enter a reference_date as 'current', previous_q' or 'previous_y'")
 
 }
