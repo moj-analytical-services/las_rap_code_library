@@ -11,9 +11,6 @@
 #
 # This function filters a dataset and returns totals based on a given criteria
 
-# need to look at swirl to learn dplyr
-
-
 value <- function (tibble, reference_date) {
 
   group <- dplyr::group_by(tibble, qtr)

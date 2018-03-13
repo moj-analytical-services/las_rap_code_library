@@ -20,8 +20,8 @@
 
 value_change <- function (tibble, reference_date, type, format) {
 
-  value1 <- lasrap::value(tibble, "current")
-  value2 <- lasrap::value(tibble, reference_date)
+  value1 <- as.numeric(lasrap::value(tibble, "current"))
+  value2 <- as.numeric(lasrap::value(tibble, reference_date))
 
 
   if      (type == "value") {
