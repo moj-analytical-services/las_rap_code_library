@@ -16,18 +16,18 @@
 
 value <- function (tibble, reference_date) {
 
-  group <- dplyr::group_by(tibble, qtrdte)
+  group <- dplyr::group_by(tibble, qtr)
   
   tibble2 <- dplyr::summarize(group, volume = sum(volume))
 
   if      (reference_date == "current")    {
-    sum(tibble2[tibble2 == extract1, "volume"])
+    sum(tibble2[tibble2 == quarter1, "volume"])
     }
   else if (reference_date == "previous_q") {
-    sum(tibble2[tibble2 == extract2, "volume"])
+    sum(tibble2[tibble2 == quarter2, "volume"])
     }
   else if (reference_date == "previous_y") {
-    sum(tibble2[tibble2 == extract3, "volume"])
+    sum(tibble2[tibble2 == quarter3, "volume"])
     }
   else    print(
     "Please enter a reference_date as 'current', previous_q' or 'previous_y'")
