@@ -13,10 +13,11 @@
 # This function filters a dataset and returns totals based on a given criteria
 
 value <- function (tibble, reference_date, volval) {
-
+  
+  volval2 <- enquo(volval)
   group <- dplyr::group_by(tibble, qtr)
   
-  tibble2 <- dplyr::summarize(group, volval = sum(volval))
+  tibble2 <- dplyr::summarize(group, volval = sum(!!volval2))
 
   if      (reference_date == "current")    {
     sum(tibble2[tibble2 == quarter1, volval])
@@ -31,3 +32,4 @@ value <- function (tibble, reference_date, volval) {
     "Please enter a reference_date as 'current', previous_q' or 'previous_y'")
 
 }
+
