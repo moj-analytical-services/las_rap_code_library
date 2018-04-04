@@ -10,6 +10,7 @@
 #' @param reference_date Either the current date, previous quarter date of previous year date
 #' @param type Either a value, difference, or percentage difference
 #' @param format logical value to enable formating
+#' @param volval string to decide summing volume workload or value (expenditure)
 #' @examples
 #' value_change(tibble, "current", "value", TRUE) (returns the total number of observations for the most recent quarter with formatting)
 #' value_change(tibble, "previous_q", "perc_diff", FALSE) (returns the perecentage difference between observations in the current and previous quarter, without any formatting)
@@ -18,10 +19,10 @@
 # This function filters a dataset and returns totals based on a given criteria
 #
 
-value_change <- function (tibble, reference_date, type, format) {
+value_change <- function (tibble, reference_date, type, format, volval) {
 
-  value1 <- as.numeric(lasrap::value(tibble, "current"))
-  value2 <- as.numeric(lasrap::value(tibble, reference_date))
+  value1 <- as.numeric(lasrap::value(tibble, "current", volval))
+  value2 <- as.numeric(lasrap::value(tibble, reference_date, volval))
 
 
   if      (type == "value") {
