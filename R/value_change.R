@@ -21,8 +21,10 @@
 
 value_change <- function (tibble, reference_date, type, format, volval) {
 
-  value1 <- as.numeric(lasrap::value(tibble, "current", volval))
-  value2 <- as.numeric(lasrap::value(tibble, reference_date, volval))
+  volval2 <- enquo(volval)
+  
+  value1 <- as.numeric(lasrap::value(tibble, "current", !!volval2))
+  value2 <- as.numeric(lasrap::value(tibble, reference_date, !!volval2))
 
 
   if      (type == "value") {
