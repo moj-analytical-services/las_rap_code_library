@@ -22,13 +22,13 @@
 
 
 
-incdec_sentence <- function (tibble, reference_data, type, tense) {
+incdec_sentence <- function (tibble, reference_data, type, tense, volval) {
   
+  volval2 <- enquo(volval)
   
+  int1 <- value_change(tibble, reference_data, type, FALSE, !!volval2)
   
-  int1 <- value_change(tibble, reference_data, type, FALSE)
-  
-  int2 <- value_change(tibble, reference_data, type, TRUE)
+  int2 <- value_change(tibble, reference_data, type, TRUE, !!volval2)
   
   
   
