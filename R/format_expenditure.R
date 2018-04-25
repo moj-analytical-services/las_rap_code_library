@@ -47,7 +47,7 @@ format_expenditure <- function(value) {
       # If checks of function pass, then run the main body of the function, and
       # return and output.
       
-      value <- paste("£",abs(round(as.numeric(value/1000000), 1)), "m", sep = "")
+      value <- paste("£",round(as.numeric(value)/1000000, 1)), "m", sep = "")
       return(value)
       
     }
