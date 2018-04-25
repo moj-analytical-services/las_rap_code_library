@@ -10,7 +10,7 @@
 #'
 #' @examples
 #'
-#' format_expenditure(5.1) #returns £5.1m
+#' format_expenditure(5100000) #returns £5.1m
 #'
 #' @export
 
