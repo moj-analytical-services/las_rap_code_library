@@ -23,8 +23,8 @@
 
 
 incdec_sentence <- function (tibble, reference_data, type, tense, volval) {
-  
-  volval2 <- enquo(volval)
+
+  volval2 <- dplyr::enquo(volval)
   
   int1 <- value_change(tibble, reference_data, type, FALSE, !!volval2)
   

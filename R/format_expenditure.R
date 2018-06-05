@@ -15,7 +15,7 @@
 #' @export
 
 format_expenditure <- function(value) {
-  
+
   tryCatch({
     
     # Check that only one value is passed to format_perc() at a time and raise
