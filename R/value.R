@@ -14,8 +14,6 @@
 
 value <- function (tibble, reference_date, volval) {
   
-  library(dplyr)
-  
   volval2 <- dplyr::enquo(volval)
   
   group <- dplyr::group_by(tibble, qtr)
