@@ -20,7 +20,7 @@
 
 #'
 
-
+library(dplyr)
 
 incdec_sentence <- function (tibble, reference_data, type, tense, volval) {
 

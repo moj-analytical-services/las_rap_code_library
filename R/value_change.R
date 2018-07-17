@@ -19,6 +19,8 @@
 # This function filters a dataset and returns totals based on a given criteria
 #
 
+library(dplyr)
+
 value_change <- function (tibble, reference_date, type, format, volval) {
 
   volval2 <- dplyr::enquo(volval)

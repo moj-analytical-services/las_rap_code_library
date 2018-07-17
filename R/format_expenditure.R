@@ -14,6 +14,8 @@
 #'
 #' @export
 
+
+
 format_expenditure <- function(value) {
 
   tryCatch({
