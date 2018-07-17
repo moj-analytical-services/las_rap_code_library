@@ -40,7 +40,7 @@ incdec_sentence <- function (tibble, reference_data, type, tense, volval) {
   
   if (tense %in% c("past", "present")) {
     
-    paste(incdec(as.numeric(int1), tense), int2)
+    paste(mojrap::incdec(as.numeric(int1), tense), int2)
     
   }
   
@@ -48,7 +48,7 @@ incdec_sentence <- function (tibble, reference_data, type, tense, volval) {
   
   else if (tense %in% c("plural", "singular")) {
     
-    paste(a, int2, incdec(as.numeric(int1), tense))}
+    paste(a, int2, mojrap::incdec(as.numeric(int1), tense))}
   
   
   
