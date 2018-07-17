@@ -14,22 +14,22 @@
 
 value <- function (tibble, reference_date, volval) {
   
-  volval2 <- enquo(volval)
+  volval2 <- dplyr::enquo(volval)
   
   group <- dplyr::group_by(tibble, qtr)
   
   tibble2 <- dplyr::summarize(group, volval = sum(!!volval2, na.rm = TRUE))
 
   if      (reference_date == "current")    {
-    as.double(tibble2 %>% filter(qtr == quarter1) %>% select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter1) %>% dplyr::select(volval))
     # sum(tibble2[tibble2 == quarter1,volval])
     }
   else if (reference_date == "previous_q") {
-    as.double(tibble2 %>% filter(qtr == quarter2) %>% select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter2) %>% dplyr::select(volval))
     # sum(tibble2[tibble2 == quarter2])
     }
   else if (reference_date == "previous_y") {
-    as.double(tibble2 %>% filter(qtr == quarter3) %>% select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter3) %>% dplyr::select(volval))
     # sum(tibble2[tibble2 == quarter3])
     }
   else    print(
