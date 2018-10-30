@@ -20,6 +20,7 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
   dteStart2 <- dplyr::enquo(dteStart)
   variable2 <- dplyr::enquo(variable)
   
+  
   las2 <- filter(las_data,scheme %in% !!schF2,category %in% !!catF2,str_detect(sub_cat1,!!sub1F2),str_detect(sub_cat2,!!sub2F2)) %>%
     mutate(period = dmy(dte)) %>%
     filter(period > lubridate::dmy(!!dteStart2))
@@ -39,7 +40,7 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
     ggplot2::geom_line(size = 1.0) +
     ggplot2::labs(colour = "") + # Remove legend header
     ggplot2::scale_color_manual(values = c("#2C486E", "#DDE5F1",
-                                           "#789AC8")) + # Set line colours
+                                           "#789AC8", "#3D6496", "#BCCDE4", "#5782BB", "#96B1D4", "#000000")) + # Set line colours
     ggplot2::ylab(ylab) +
     ggplot2::xlab(xlab) +
     ggplot2::scale_y_continuous(expand = c(0,0), labels = scales::comma) +
@@ -52,7 +53,7 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
                    panel.border = element_blank(),
                    panel.grid.major.y = element_line(color = "grey", linetype = "dashed"),
                    panel.grid.major.x = element_blank(),
-                   text = element_text(size = 10, family = "Arial"),
+                   text = element_text(size = 12, family = "Arial"),
                    panel.grid.minor.x = element_blank(),
                    axis.line = element_line(color = "grey", linetype = "solid"),
                    axis.title.x = element_blank(),
@@ -63,6 +64,16 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
 
 
 #TESTING
+# library(dplyr)
+# library(stringr)
+# library(lubridate)
+# library(ggplot2)
+# library(mojrap)
+# library(lasrap)
+# 
+# las_data <- s3tools::s3_path_to_full_df("alpha-legal-aid-statistics-team/lasq118r.csv")
+# las_data <- tibble::as_tibble(las_data) 
+# 
 # filtCat <- c("ch - Litigator Graduated Fee Scheme","ch - Advocate Graduated Fee Scheme","ch - High Cost Crime")
 # filtScheme <- c("Crime Higher")
 # 
@@ -83,6 +94,6 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
 # chartit(las_data,value,scheme,'sc',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
 # 
 # chartit(las_data,value,c("Civil Representation","Legal Help"),c("cr - Closed - cost met by LAA","cr - Closed - cost met by opponent","lh - Matters completed"),filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-
-
+# 
+# 
 
