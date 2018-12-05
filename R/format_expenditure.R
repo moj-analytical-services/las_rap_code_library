@@ -52,6 +52,7 @@ format_expenditure <- function(value) {
       value <- paste("£",(round(abs(as.numeric(value)/1000000), 1)), "m", sep = "")
       return(value)
       
+      
     }
   }
   , warning = function(war){
