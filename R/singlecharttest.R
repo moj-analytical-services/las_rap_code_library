@@ -38,6 +38,18 @@ chartit3 <- dplyr::summarize(grp3, volval = sum(value, na.rm = TRUE)/1000000)
 df <- chartit3
 
 
+
+chartit2 <- dplyr::summarize(grp2, volval = sum(volume, na.rm = TRUE)/1000000)
+
+
+
+
+las13 <- transform(las3, period = as.yearqtr(period))
+grp13 = dplyr::group_by(las13, period,fin_yr,fin_qtr, category,year)
+dfvol <- dplyr::summarize(grp13, volval = sum(volume, na.rm = TRUE))
+
+
+
 #create variables for use below
 title <- "Test graph"                                                         # chart title (delete if no title needed)
 ylabel <- "y axis"                                      # label for y-axis
@@ -58,7 +70,7 @@ fylabel <- unique(df$fin_yr)
 
 
 
-graphtest <- 
+graphtestval <- 
   
   ggplot(data = df,
        aes(x = period, y = volval, variable=category, color=category)) + # Select the variables
@@ -67,7 +79,7 @@ graphtest <-
   scale_color_manual(values = c("#2C486E","#789AC8", "#DDE5F1")) + # Set line colours
   ylab("Crime Expenditure (£m)") +
   #geom_vline(xintercept = as.numeric(df$period[yday(df$period) == 1]), color = "lightgrey") +
-  geom_segment(x=2014, xend=2014, y=0, yend=100, colour="lightgrey", show.legend = FALSE) +
+  #geom_segment(x=2014, xend=2014, y=0, yend=100, colour="lightgrey", show.legend = FALSE) +
   #scale_y_continuous(expand = c(0,0), labels = scales::comma) +
   scale_y_continuous(minor_breaks = seq(0, ymax, ybreak),
                      breaks = seq(0, ymax, ybreak), 
@@ -102,12 +114,70 @@ graphtest <-
 
 # Plot lines for year seperators
 for (i in yearbreaks) {
-  graphtest <- graphtest + geom_segment(x=i, xend=i, y=vyearlocation, yend=0, colour="lightgrey", show.legend = FALSE)
+  graphtestval <- graphtestval + geom_segment(x=i, xend=i, y=vyearlocation, yend=0, colour="lightgrey", show.legend = FALSE)
 }
 
 
 # Allow for annotation outside of plot area (prevent Qs from cutting off) and plot chart
-fig <- ggplot_gtable(ggplot_build(graphtest))
-fig$layout$clip[fig$layout$name == "panel"] <- "off"
-grid::grid.draw(fig)
+fig2 <- ggplot_gtable(ggplot_build(graphtestval))
+fig2$layout$clip[fig2$layout$name == "panel"] <- "off"
+grid::grid.draw(fig2)
+
+
+
+
+graphtestvol <- 
+  
+  ggplot(data = dfvol,
+         aes(x = period, y = volval, variable=category, color=category)) + # Select the variables
+  geom_line(size = 1.0) +
+  labs(colour = "") + # Remove legend header
+  scale_color_manual(values = c("#2C486E","#789AC8", "#DDE5F1")) + # Set line colours
+  ylab("Crime Volume") +
+  #geom_vline(xintercept = as.numeric(df$period[yday(df$period) == 1]), color = "lightgrey") +
+  #geom_segment(x=2014, xend=2014, y=0, yend=100, colour="lightgrey", show.legend = FALSE) +
+  #scale_y_continuous(expand = c(0,0), labels = scales::comma) +
+  scale_y_continuous(minor_breaks = seq(0, ymax, ybreak),
+                     breaks = seq(0, ymax, ybreak), 
+                     expand = c(0, 0),
+                     limits = c(vyearlocation, ymax)) +                                             # y-axis breaks and limits
+  #scale_x_yearqtr(breaks = seq(from = min(df$period), to = max(df$period), by = 0.25),
+  #             format = "%YQ%q") +
+  #scale_x_date(date_breaks = "3 months", date_labels = "%b-%y" ) +
+  scale_x_yearqtr(expand = c(0.01,0))+ 
+  #scale_x_yearqtr(format = "%Y", n = numyears, expand = c(0.01,0),
+  #                minor_breaks = hyearlocation,
+  #                breaks = hyearlocation)+ # year placement on x-axis
+  annotate(geom = "text", x = hquarterlocation, y = vquarterlocation, label = quarterlabels, 
+           size = 3, vjust=1) +
+  annotate(geom = "text", x = hyearlocation, y = vyearlocation, label = fylabel, 
+           size = 3, vjust=1) +
+  # quarter placement on x-axis
+  expand_limits(y = c(0, 100)) +
+  theme_bw() + # Change theme to get rid of grey background
+  theme(#axis.text.x = element_text(angle = 0),
+    axis.text.x = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major.y = element_line(color = "lightgrey", linetype = "solid"),
+    #panel.grid.major.y = element_line(color = "grey", linetype = "dashed"),
+    panel.grid.major.x = element_blank(),
+    text = element_text(size = 10, family = "Arial"),
+    panel.grid.minor.x = element_blank(),
+    #axis.line = element_line(color = "grey", linetype = "solid"),
+    axis.title.x = element_blank(),
+    axis.ticks = element_blank(),
+    legend.position = "bottom")
+
+# Plot lines for year seperators
+for (i in yearbreaks) {
+  graphtestvol <- graphtestvol + geom_segment(x=i, xend=i, y=vyearlocation, yend=0, colour="lightgrey", show.legend = FALSE)
+}
+
+
+# Allow for annotation outside of plot area (prevent Qs from cutting off) and plot chart
+fig1 <- ggplot_gtable(ggplot_build(graphtestvol))
+fig1$layout$clip[fig1$layout$name == "panel"] <- "off"
+grid::grid.draw(fig1)
+
+
 
