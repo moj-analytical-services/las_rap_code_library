@@ -51,7 +51,7 @@ value_change <- function (tibble, reference_date, type, format, volval) {
 
 
   if (out == "0%") {
-    out <- value_change(tibble, reference_date, "diff", TRUE)
+    out <- "ZZZ   0%   ZXZ"         #ERROR ##value_change(tibble, reference_date, "diff", TRUE)
     } # If there is a 0% value change true absolute difference
   if (out == "0") {
     out <- print("ERROR: There has been no change")

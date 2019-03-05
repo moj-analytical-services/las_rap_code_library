@@ -30,12 +30,12 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
     mutate(period = dmy(dte)-days(10))
   
   grp2 = dplyr::group_by(las4, period,fin_yr,fin_qtr, !!variable2) 
-  chartit <- dplyr::summarize(grp2, volval3 = sum(!!volval2, na.rm = TRUE)) 
+  chartit2 <- dplyr::summarize(grp2, volval3 = sum(!!volval2, na.rm = TRUE)) 
   
 
-  ymax <- ceiling(1.1 * max(chartit$volval3, na.rm = TRUE))
+  ymax <- ceiling(1.1 * max(chartit2$volval3, na.rm = TRUE))
   
-    ggplot2::ggplot(data = chartit,
+    ggplot2::ggplot(data = chartit2,
                   ggplot2::aes_string(x = "period", y = "volval3", variable=switch(swi, 'ca' = "category",'su' = "sub_cat1",'sc'="scheme"), color=switch(swi, 'ca' = "category",'su' = "sub_cat1",'sc'="scheme"))) + # Select the variables
     ggplot2::geom_line(size = 1.0) +
     ggplot2::labs(colour = "") + # Remove legend header
@@ -64,36 +64,36 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
 
 
 #TESTING
-# library(dplyr)
-# library(stringr)
-# library(lubridate)
-# library(ggplot2)
-# library(mojrap)
-# library(lasrap)
-# 
-# las_data <- s3tools::s3_path_to_full_df("alpha-legal-aid-statistics-team/lasq118r.csv")
-# las_data <- tibble::as_tibble(las_data) 
-# 
-# filtCat <- c("ch - Litigator Graduated Fee Scheme","ch - Advocate Graduated Fee Scheme","ch - High Cost Crime")
-# filtScheme <- c("Crime Higher")
-# 
-# filtCat <- c("lh - Matters completed","cr - Closed - cost met by LAA","cr - Closed - cost met by opponent")
-# filtScheme <- c("Legal Help","Civil Representation")
-# 
-# filtSubCat1 <- c(" - ")
-# filtSubCat2 <- c(" - ")
-# startDte <- '01/04/2015'
-# labelX <- "Period"
-# labelY <- "Expenditure"
-# plotit <- "sub_cat1"
-# 
-# chartit(las_data,value,sub_cat1,'su',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-# 
-# chartit(las_data,volume,category,'ca',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-# 
-# chartit(las_data,value,scheme,'sc',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-# 
-# chartit(las_data,value,c("Civil Representation","Legal Help"),c("cr - Closed - cost met by LAA","cr - Closed - cost met by opponent","lh - Matters completed"),filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-# 
-# 
+library(dplyr)
+library(stringr)
+library(lubridate)
+library(ggplot2)
+library(mojrap)
+library(lasrap)
+
+las_data <- s3tools::s3_path_to_full_df("alpha-legal-aid-statistics-team/lasq118r.csv")
+las_data <- tibble::as_tibble(las_data)
+
+filtCat <- c("ch - Litigator Graduated Fee Scheme","ch - Advocate Graduated Fee Scheme","ch - High Cost Crime")
+filtScheme <- c("Crime Higher")
+
+filtCat <- c("lh - Matters completed","cr - Closed - cost met by LAA","cr - Closed - cost met by opponent")
+filtScheme <- c("Legal Help","Civil Representation")
+
+filtSubCat1 <- c(" - ")
+filtSubCat2 <- c(" - ")
+startDte <- '01/04/2015'
+labelX <- "Period"
+labelY <- "Expenditure"
+plotit <- "sub_cat1"
+
+chartit(las_data,value,sub_cat1,'su',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+
+chartit(las_data,volume,category,'ca',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+
+chartit(las_data,value,scheme,'sc',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+
+chartit(las_data,value,c("Civil Representation","Legal Help"),c("cr - Closed - cost met by LAA","cr - Closed - cost met by opponent","lh - Matters completed"),filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+
+
 
