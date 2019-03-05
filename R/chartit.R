@@ -63,37 +63,37 @@ chartit <- function (tibble, volval, variable, swi, schF,catF,sub1F,sub2F,dteSta
 }
 
 
-#TESTING
-library(dplyr)
-library(stringr)
-library(lubridate)
-library(ggplot2)
-library(mojrap)
-library(lasrap)
-
-las_data <- s3tools::s3_path_to_full_df("alpha-legal-aid-statistics-team/lasq118r.csv")
-las_data <- tibble::as_tibble(las_data)
-
-filtCat <- c("ch - Litigator Graduated Fee Scheme","ch - Advocate Graduated Fee Scheme","ch - High Cost Crime")
-filtScheme <- c("Crime Higher")
-
-filtCat <- c("lh - Matters completed","cr - Closed - cost met by LAA","cr - Closed - cost met by opponent")
-filtScheme <- c("Legal Help","Civil Representation")
-
-filtSubCat1 <- c(" - ")
-filtSubCat2 <- c(" - ")
-startDte <- '01/04/2015'
-labelX <- "Period"
-labelY <- "Expenditure"
-plotit <- "sub_cat1"
-
-chartit(las_data,value,sub_cat1,'su',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-
-chartit(las_data,volume,category,'ca',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-
-chartit(las_data,value,scheme,'sc',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-
-chartit(las_data,value,c("Civil Representation","Legal Help"),c("cr - Closed - cost met by LAA","cr - Closed - cost met by opponent","lh - Matters completed"),filtSubCat1,filtSubCat2,startDte,labelX,labelY)
-
-
-
+# #TESTING
+# library(dplyr)
+# library(stringr)
+# library(lubridate)
+# library(ggplot2)
+# library(mojrap)
+# library(lasrap)
+# 
+# las_data <- s3tools::s3_path_to_full_df("alpha-legal-aid-statistics-team/lasq118r.csv")
+# las_data <- tibble::as_tibble(las_data)
+# 
+# filtCat <- c("ch - Litigator Graduated Fee Scheme","ch - Advocate Graduated Fee Scheme","ch - High Cost Crime")
+# filtScheme <- c("Crime Higher")
+# 
+# filtCat <- c("lh - Matters completed","cr - Closed - cost met by LAA","cr - Closed - cost met by opponent")
+# filtScheme <- c("Legal Help","Civil Representation")
+# 
+# filtSubCat1 <- c(" - ")
+# filtSubCat2 <- c(" - ")
+# startDte <- '01/04/2015'
+# labelX <- "Period"
+# labelY <- "Expenditure"
+# plotit <- "sub_cat1"
+# 
+# chartit(las_data,value,sub_cat1,'su',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+# 
+# chartit(las_data,volume,category,'ca',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+# 
+# chartit(las_data,value,scheme,'sc',filtScheme,filtCat,filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+# 
+# chartit(las_data,value,c("Civil Representation","Legal Help"),c("cr - Closed - cost met by LAA","cr - Closed - cost met by opponent","lh - Matters completed"),filtSubCat1,filtSubCat2,startDte,labelX,labelY)
+# 
+# 
+# 
