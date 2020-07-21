@@ -17,11 +17,11 @@ load_las <- function(file) {
   # This collects the name of the latest LAS CSV
   s3tools::get_credentials()
   allCSVs <- s3tools::list_files_in_buckets(bucket_filter = 'alpha-legal-aid-statistics-team')$filename
-  allCSVs <- allCSVs[which(str_sub(allCSVs,-4) == '.csv')]
+  allCSVs <- allCSVs[which(stringr::str_sub(allCSVs,-4) == '.csv')]
   
-  latest_yr <- str_sub(allCSVs, 6, 7) %>% max()
+  latest_yr <- stringr::str_sub(allCSVs, 6, 7) %>% max()
   
-  latest_CSV <- allCSVs[which(str_sub(allCSVs,6, 7) == latest_yr)] %>%
+  latest_CSV <- allCSVs[which(stringr::str_sub(allCSVs,6, 7) == latest_yr)] %>%
     max()
   
   
