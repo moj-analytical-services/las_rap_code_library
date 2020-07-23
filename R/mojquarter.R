@@ -14,13 +14,13 @@
 
 mojquarter <- function(date, type) {
   if(type == 1) {
-    return(paste0(as.numeric(stringr::substr(date, 1, 4)),"q",lubridate::quarter(date,fiscal_start = type)))
+    return(paste0(as.numeric(substr(date, 1, 4)),"q",lubridate::quarter(date,fiscal_start = type)))
   }
   
   else if(type == 4) {
     year <- ifelse(dplyr::between(lubridate::month(date), 1, 3), 
-                   as.numeric(stringr::substr(date, 1, 4)) - 1, 
-                   as.numeric(stringr::substr(date, 1, 4)))
+                   as.numeric(substr(date, 1, 4)) - 1, 
+                   as.numeric(substr(date, 1, 4)))
     
     return(paste0(year,"q",lubridate::quarter(date,fiscal_start = type)))
   }
