@@ -1,4 +1,4 @@
-#' Check if las CSV used is the latest one.
+#' Check if las CSV is the latest one.
 #'
 #' @description Function to check if a las CSV is the latest one.
 #'
@@ -7,12 +7,12 @@
 #' @examples
 # up_to_date(las_data)
 #' 
-#' @return If the tables match, the output will come up as "TRUE". Otherwise this function confirms which columns have "TRUE" and "FALSE" matches.
+#' @return If the tables match, the output will come up as "TRUE". Otherwise it will come up as "FALSE".
 #'
 #' @export
 
 up_to_date <- function(las_data) {
   latest <- lasrap::load_las(NULL)
   
-  compare(las_data, latest)
+  compare::compare(las_data, latest)
 }

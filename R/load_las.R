@@ -19,10 +19,9 @@ load_las <- function(file) {
   allCSVs <- s3tools::list_files_in_buckets(bucket_filter = 'alpha-legal-aid-statistics-team')$filename
   allCSVs <- allCSVs[which(stringr::str_sub(allCSVs,-4) == '.csv')]
   
-  latest_yr <- stringr::str_sub(allCSVs, 6, 7) %>% max()
+  latest_yr <- max(stringr::str_sub(allCSVs, 6, 7))
   
-  latest_CSV <- allCSVs[which(stringr::str_sub(allCSVs,6, 7) == latest_yr)] %>%
-    max()
+  latest_CSV <- max(allCSVs[which(stringr::str_sub(allCSVs,6, 7) == latest_yr)])
   
   
   if(is.null(file))
