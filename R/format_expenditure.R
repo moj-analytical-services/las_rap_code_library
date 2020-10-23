@@ -1,22 +1,28 @@
 #' @title Format expenditure
 #'
-#' @description Convert value to amount for publication
+#' @description Convert value to amount for publication. By default, the expenditure format is in £m with 1 decimal place.
 #'
-#' @details Generic method to convert value into a £m (also could look at amount and do k, £ so could be expanded)
+#' @details Generic method to convert value into a £m, £k, $m etc.
 #'
-#' @param value An amount of expenditure in £'s
+#' @param value An amount of expenditure in 
+#' @param format Whether the expenditure is written in millions (m) or thousands (k). Default: millions
+#' @param currency Default: £'s
+#' @param dp Number of decimal places to round expenditure to. Default: 1 decimal place
 #'
 #' @return A character object.
 #'
 #' @examples
 #'
-#' format_expenditure(5100000) #returns £5.1m
-#'
+#' format_expenditure(36573436) #returns £36.6m
+#' format_expenditure(3562744, currency = "$") #returns $3.6m
+#' format_expenditure(3562744, format = "k") #returns £3562.7k
+#' format_expenditure(4654262.65, currency = "£", dp = 3) #returns £4.654m
+#' 
 #' @export
 
 
 
-format_expenditure <- function(value) {
+format_expenditure <- function(value, format = "m", currency = "£", dp = 1) {
 
   tryCatch({
     
@@ -44,12 +50,23 @@ format_expenditure <- function(value) {
       
       stop("Input to format_expenditure is NA", call. = FALSE)
       
-    } else {
+    } else if (format == 'm') {
       
       # If checks of function pass, then run the main body of the function, and
       # return and output.
       
-      value <- paste("£",(round(abs(as.numeric(value)/1000000), 1)), "m", sep = "")
+      value <- paste(currency,(round(abs(as.numeric(formattable::comma(value))/1000000), dp))
+                     , "m", sep = "")
+      return(value)
+      
+      
+    } else if (format == 'k') {
+      
+      # If checks of function pass, then run the main body of the function, and
+      # return and output.
+      
+      value <- paste(currency,(round(abs(as.numeric(formattable::comma(value))/1000), dp))
+                     , "k", sep = "")
       return(value)
       
       
