@@ -1,6 +1,6 @@
 #' Loads specific CSV from alpha-legal-aid-statistics-team AWS bucket and allows you to pick specific schemes and categories.
 #'
-#' @description Function to load CSV from alpha-legal-aid-statistics-team AWS bucket and filter by scheme and category.
+#' @description Function to load CSV from alpha-legal-aid-statistics-team AWS bucket and filter by scheme and category. Input for all parameters is case-sensitive.
 #'
 #' @param file Needs to be either NULL or the name of a CSV that is in the AWS bucket. By default, this function loads the latest CSV.
 #' @param choose_scheme Needs to be a valid scheme. By default, this function selects all avaiable schemes.
