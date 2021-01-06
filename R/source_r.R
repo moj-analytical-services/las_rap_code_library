@@ -1,13 +1,14 @@
 #' Choose between automatic or manual source script.
 #'
-#' @description Function to choose between automatic or manual source script.
+#' @description You can choose between automatic or manual source script. The source script collects the name and coverage of the quarters mentioned in the bulletin.
 #'
-#' @param auto Needs to be dataframe of a CSV from the alpha-legal-aid-statistics-team AWS bucket.
+#' @param auto Input TRUE if you want to run automatic source script or FALSE if you want to run manual source script.
 #
 #' @examples
 # source_r(auto = TRUE)
+# source_r(auto = FALSE)
 #' 
-#' @return Quarters mentioned in bulletin.
+#' @return Name and coverage of quarters mentioned in bulletin.
 #'
 #' @export
 
@@ -21,6 +22,6 @@ source_r <- function(auto) {
   }
   
   else{
-    stop("Please input TRUE or FALSE")
+    stop("Please input TRUE or FALSE. This function is case-sensitive.")
   }
 }
