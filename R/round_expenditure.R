@@ -1,18 +1,18 @@
-#' @title las expenditure
+#' @title Round expenditure
 #' 
 #' @description Formats expenditure depending on how many digits it has
 #'
-#' @param value An amount of expenditure in
+#' @param value An amount of expenditure in £
 #
 #' @examples
-# las_expenditure(456098) gives you £456.1k
-# las_expenditure(9357256) gives you £9.4m
+# round_expenditure(456098) gives you £456.1k
+# round_expenditure(9357256) gives you £9.4m
 #' 
 #' @return A character object.
 #'
 #' @export
 
-las_expenditure <- function(value) {
+round_expenditure <- function(value) {
   
   tryCatch({
     
