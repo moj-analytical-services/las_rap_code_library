@@ -10,6 +10,7 @@
 #' value(tibble, "previous_q") (returns the total number of observations for the previous quarter)
 #' value(tibble, "previous_y") (returns the total number of observations for the previous years quarter)
 #' value(tibble, "whole_yr") (returns the total number of observations for the cumulative year to date)
+#' value(tibble, "previous_2y") (returns the total number of observations for the same quarter 2 years before)
 
 #
 # This function filters a dataset and returns totals based on a given criteria
@@ -39,8 +40,12 @@ value <- function (tibble, reference_date, volval) {
   else if (reference_date == "whole_yr") {
     as.double(tibble2 %>% dplyr::filter(qtr == quarter1) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter2) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter3ago) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter4ago) %>% dplyr::select(volval))
   }
+  else if (reference_date == "previous_2y") {
+    as.double(tibble2 %>% dplyr::filter(qtr == year2ago) %>% dplyr::select(volval))
+    # sum(tibble2[tibble2 == quarter3])
+  }
   else    print(
-    "Please enter a reference_date as 'current', 'previous_q', 'whole_yr'  or 'previous_y'")
+    "Please enter a reference_date as 'current', 'previous_q', 'whole_yr' , 'previous_y' or 'previous_2y'")
 
 }
 
