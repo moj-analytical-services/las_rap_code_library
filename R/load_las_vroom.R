@@ -3,7 +3,7 @@
 #' @description Function to load CSV from alpha-legal-aid-statistics-team AWS bucket and filter by scheme and category. Input for all parameters is case-sensitive.
 #'
 #' @param file Needs to be either NULL or the name of a CSV that is in the AWS bucket. By default, this function loads the latest CSV.
-#' @param choose_scheme Needs to be a valid scheme. By default, this function selects all avaiable schemes.
+#' @param choose_scheme Needs to be a valid scheme. By default, this function selects all available schemes.
 #' @param choose_cat Needs to be a valid category. By default, this function chooses all available categories depending on the chosen scheme.
 #
 #' @examples
@@ -21,9 +21,8 @@
 load_las_vroom <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_cat) {
   
   # This collects the name of the latest LAS CSV
-  s3tools::get_credentials()
-  allCSVs <- s3tools::list_files_in_buckets(bucket_filter = 'alpha-legal-aid-statistics-team')$filename
-  allCSVs <- allCSVs[which(stringr::str_sub(allCSVs,-4) == '.csv')]
+  allCSVs <- botor::s3_ls('s3://alpha-legal-aid-statistics-team')$key
+  allCSVs <- allCSVs[which(stringr::str_sub(allCSVs,-4) == '.csv' & stringr::str_sub(allCSVs, 1, 4) == 'lasq')]
   
   latest_yr <- max(stringr::str_sub(allCSVs, 6, 7))
   
@@ -43,7 +42,7 @@ load_las_vroom <- function(file = NULL, choose_scheme = all_scheme, choose_cat =
   {
     file <- latest_CSV
     file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- s3tools::read_using(FUN=vroom::vroom, s3_path=file_path)
+    output <- read_using(FUN=vroom::vroom, s3_path=file_path)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     
@@ -58,7 +57,7 @@ load_las_vroom <- function(file = NULL, choose_scheme = all_scheme, choose_cat =
   else if(file %in% allCSVs)
   {
     file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- s3tools::read_using(FUN=vroom::vroom, s3_path=file_path)
+    output <- read_using(FUN=vroom::vroom, s3_path=file_path)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     

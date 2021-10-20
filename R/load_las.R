@@ -21,9 +21,8 @@
 load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_cat) {
   
   # This collects the name of the latest LAS CSV
-  s3tools::get_credentials()
-  allCSVs <- s3tools::list_files_in_buckets(bucket_filter = 'alpha-legal-aid-statistics-team')$filename
-  allCSVs <- allCSVs[which(stringr::str_sub(allCSVs,-4) == '.csv')]
+  allCSVs <- botor::s3_ls('s3://alpha-legal-aid-statistics-team')$key
+  allCSVs <- allCSVs[which(stringr::str_sub(allCSVs,-4) == '.csv' & stringr::str_sub(allCSVs, 1, 4) == 'lasq')]
   
   latest_yr <- max(stringr::str_sub(allCSVs, 6, 7))
   
@@ -43,7 +42,7 @@ load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_c
   {
     file <- latest_CSV
     file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- s3tools::s3_path_to_full_df(file_path)
+    output <- lasrap::s3_path_to_full_df(file_path)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     
@@ -58,7 +57,7 @@ load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_c
   else if(file %in% allCSVs)
   {
     file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- s3tools::s3_path_to_full_df(file_path)
+    output <- lasrap::s3_path_to_full_df(file_path)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     
