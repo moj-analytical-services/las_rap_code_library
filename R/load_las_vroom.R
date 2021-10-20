@@ -42,7 +42,7 @@ load_las_vroom <- function(file = NULL, choose_scheme = all_scheme, choose_cat =
   {
     file <- latest_CSV
     file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- read_using(FUN=vroom::vroom, s3_path=file_path)
+    output <- lasrap::read_using(FUN=vroom::vroom, s3_path=file_path)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     
@@ -57,7 +57,7 @@ load_las_vroom <- function(file = NULL, choose_scheme = all_scheme, choose_cat =
   else if(file %in% allCSVs)
   {
     file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- read_using(FUN=vroom::vroom, s3_path=file_path)
+    output <- lasrap::read_using(FUN=vroom::vroom, s3_path=file_path)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     
