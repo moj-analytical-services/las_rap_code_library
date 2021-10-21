@@ -1,11 +1,10 @@
 Package: lasrap
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
+Title: Functions used for legal aid statistics publications and R Shiny apps
+Version: 0.2.2
+Author: Legal Aid Statistics Team
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: This package has functions that are used for legal aid statistics publications and R Shiny apps. Functions include value(), value_change() or load_las().
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
