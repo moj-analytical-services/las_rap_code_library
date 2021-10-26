@@ -47,7 +47,7 @@ s3_path_to_full_df <- function(s3_path, ...) {
     
   } else {
     tryCatch({
-      read_using(FUN = readxl::read_excel, s3_path = s3_path, ...)
+      lasrap::read_using(FUN = readxl::read_excel, s3_path = s3_path, ...)
     },
     error = function(cond){
       stop("\nError, file cannot be parsed. \nYou either don't have access to this bucket, or are using an invalid s3_path argument (the s3_path you've entered needs correcting).")
