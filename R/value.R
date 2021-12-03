@@ -41,7 +41,7 @@ value <- function (tibble, reference_date, volval) {
     as.double(tibble2 %>% dplyr::filter(qtr == quarter1) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter2) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter3ago) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter4ago) %>% dplyr::select(volval))
   }
   else if (reference_date == "previous_2y") {
-    as.double(tibble2 %>% dplyr::filter(qtr == year2ago) %>% dplyr::select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter5) %>% dplyr::select(volval))
     # sum(tibble2[tibble2 == quarter3])
   }
   else    print(
