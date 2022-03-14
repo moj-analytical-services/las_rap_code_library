@@ -29,7 +29,7 @@ load_las_vroom <- function(file = NULL, choose_scheme = all_scheme, choose_cat =
   latest_CSV <- max(allCSVs[which(stringr::str_sub(allCSVs,6, 7) == latest_yr)])
   
   all_scheme <- c("Crime Higher", "Crime Apps and Grants", "Crime Lower", 
-                  "Exceptional Case Funding", "Mediation", "Civil Representation", "Legal Help", 
+                  "Exceptional Case Funding", "Mediation", "Civil Representation", "Gateway Civil Representation", "Legal Help", 
                   "Central Funds", "Crown Court", "Higher Courts", "Overall Expenditure")
   
   scheme_exists <- is.element(choose_scheme, all_scheme)
