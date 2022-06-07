@@ -18,7 +18,7 @@
 #'
 #' @export
 
-load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_cat) {
+load_las <- function(file = NULL, FUN = readr::read_csv, choose_scheme = all_scheme, choose_cat = all_cat) {
   
   # This collects the name of the latest LAS CSV
   allCSVs <- botor::s3_ls('s3://alpha-legal-aid-statistics-team')$key
@@ -41,8 +41,8 @@ load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_c
   else if(is.null(file))
   {
     file <- latest_CSV
-    file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- lasrap::s3_path_to_full_df(file_path)
+    file_path <- paste0("s3://alpha-legal-aid-statistics-team/", file)
+    output <- botor::s3_read(file_path, FUN)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     
@@ -56,8 +56,8 @@ load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_c
   
   else if(file %in% allCSVs)
   {
-    file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- lasrap::s3_path_to_full_df(file_path)
+    file_path <- paste0("s3://alpha-legal-aid-statistics-team/", file)
+    output <- botor::s3_read(file_path, FUN)
     output <- dplyr::filter(output, scheme %in% choose_scheme)
     all_cat <- unique(output$category)
     
