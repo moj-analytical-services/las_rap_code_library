@@ -29,6 +29,9 @@
 plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, legend.rows = dplyr::n_distinct(df$category),
                      label_position, nudge_x = 5, nudge_y = 50){
   
+  # Colour scheme
+  las_colour <- unname(c(mojchart::moj_palette(6, "muted2"), mojchart::moj_palette(6, "vibrant2")), 
+                       mojchart::moj_colours("mojblack", "mojpurple", "mojbrightpurple", "mojdarkpurple"))
   
   # Format y-axis labels
   y_format <- if(deparse(substitute(df)) == "ecf_outcome"){
@@ -41,22 +44,26 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
     
     df$category <- factor(df$category, levels = c("Other", "Family", "Immigration", "Inquest"))
     
-    ggplot(data = df,
+    ggplot2::ggplot(data = df,
            aes(x = get(yr_or_qtr), y = get(volval), fill=category)) + # Select the variables
-      geom_bar(stat = 'identity', width = 0.5) + # Set line colours
-      scale_fill_manual(values = las_colour[1:dplyr::n_distinct(df$category)],
+      
+      ggplot2::geom_bar(stat = 'identity', width = 0.5) + # Set line colours
+      
+      ggplot2::scale_fill_manual(values = las_colour[1:dplyr::n_distinct(df$category)],
                         guide=guide_legend(nrow=legend.rows, byrow= T, title = ""))
     
   }
   
   ## Label lines of Overall Expenditure graphs
   else if (deparse(substitute(df)) == "OE"){
-    ggplot(data = df,
+    ggplot2::ggplot(data = df,
            aes(x = get(yr_or_qtr), y = get(volval), color=category, group = category, label = category)) + # Select the variables
-      geom_line(size = 0.7) +
-      scale_color_manual(values = las_colour[1:dplyr::n_distinct(df$category)])  + 
       
-      geom_text_repel(data = filter(df, fin_yr == label_position), 
+      ggplot2::geom_line(size = 0.7) +
+      
+      ggplot2::scale_color_manual(values = las_colour[1:dplyr::n_distinct(df$category)])  + 
+      
+      ggrepel::geom_text_repel(data = filter(df, fin_yr == label_position), 
                       aes(label = category),
                       #color = "black",
                       fontface = "bold",
@@ -69,11 +76,14 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
   
   ## Label lines on all other graphs
   else{
-    ggplot(data = df,
+    ggplot2::ggplot(data = df,
            aes(x = get(yr_or_qtr), y = get(volval), color=category, group = category, label = category)) + # Select the variables
-      geom_line(size = 0.7) +
-      scale_color_manual(values = las_colour[1:dplyr::n_distinct(df$category)]) +
-      geom_text_repel(data = filter(df, qtr == label_position), 
+      
+      ggplot2::geom_line(size = 0.7) +
+      
+      ggplot2::scale_color_manual(values = las_colour[1:dplyr::n_distinct(df$category)]) +
+      
+      ggrepel::geom_text_repel(data = filter(df, qtr == label_position), 
                       aes(label = category),
                       #color = "black",
                       fontface = "bold",
@@ -86,17 +96,17 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
   
   # Customize graph
   graph <- graph +
-    ggtitle(ylabel) +                                      # Modify formatting of axis
-    coord_cartesian(ylim = c(0, ymax), expand = FALSE, clip = "off") +
-    scale_y_continuous(labels = y_format, breaks = seq(0, ymax, by = intervals)) +
-    guides(colour = guide_legend(nrow = legend.rows))
+    ggplot2::ggtitle(ylabel) +                                      # Modify formatting of axis
+    ggplot2::coord_cartesian(ylim = c(0, ymax), expand = FALSE, clip = "off") +
+    ggplot2::scale_y_continuous(labels = y_format, breaks = seq(0, ymax, by = intervals)) +
+    ggplot2::guides(colour = guide_legend(nrow = legend.rows))
   
   # Produces either Overall Expenditure graph or other graphs
   if(deparse(substitute(df)) == "OE"){
     
     # Produces Overall Expenditure graph
     graph +
-      geom_segment(
+      ggplot2::geom_segment(
         data = tibble(),
         mapping = aes(x= c(1:dplyr::n_distinct(OE$fin_yr)),
                       y=rep(30, dplyr::n_distinct(OE$fin_yr)),
@@ -110,9 +120,9 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
   else if(deparse(substitute(df)) == "ecf_category"){
     # Create x-axis labels for quarters
     xaxis <- df %>%
-      select(fin_yr, qtr) %>%
-      distinct() %>%
-      arrange(fin_yr, qtr) %>%
+      dplyr::select(fin_yr, qtr) %>%
+      dplyr::distinct() %>%
+      dplyr::arrange(fin_yr, qtr) %>%
       dplyr::mutate(xlabel = dplyr::case_when(substring(qtr, 6) == 2 ~ fin_yr,
                                               TRUE ~ ""))
     
@@ -122,15 +132,18 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
     
     xlabel <- all_qtrs[(length(all_qtrs) + 1 - dplyr::n_distinct(df$qtr)) : length(all_qtrs)]
     
-    data_ends <- df %>% filter(qtr == "2021q2")
+    data_ends <- df %>% dplyr::filter(qtr == "2021q2")
     
     # Produces other graphs
     graph +
-      annotate(geom = "text", x = c(1:dplyr::n_distinct(xaxis$qtr)), y = -ymax/6.25, 
+      
+      ggplot2::annotate(geom = "text", x = c(1:dplyr::n_distinct(xaxis$qtr)), y = -ymax/6.25, 
                label = xlabel, 
                size = 4) +
-      scale_x_discrete(labels = qtr_label(unique(xaxis$qtr))) +
-      geom_segment(
+      
+      ggplot2::scale_x_discrete(labels = qtr_label(unique(xaxis$qtr))) +
+      
+      ggplot2::geom_segment(
         data = tibble(),
         mapping = aes(x=seq(0, dplyr::n_distinct(xaxis$qtr), 4),
                       y=rep(0, dplyr::n_distinct(xaxis$fin_yr)),
@@ -144,9 +157,9 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
   else{
     # Create x-axis labels for quarters
     xaxis <- df %>%
-      select(fin_yr, qtr) %>%
-      distinct() %>%
-      arrange(fin_yr, qtr) %>%
+      dplyr::select(fin_yr, qtr) %>%
+      dplyr::distinct() %>%
+      dplyr::arrange(fin_yr, qtr) %>%
       dplyr::mutate(xlabel = dplyr::case_when(substring(qtr, 6) == 2 ~ fin_yr,
                                               TRUE ~ ""))
     
@@ -156,15 +169,15 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
     
     xlabel <- all_qtrs[(length(all_qtrs) + 1 - dplyr::n_distinct(df$qtr)) : length(all_qtrs)]
     
-    data_ends <- df %>% filter(qtr == "2021q3")
+    data_ends <- df %>% dplyr::filter(qtr == "2021q3")
     
     # Produces other graphs
     graph +
-      annotate(geom = "text", x = c(1:dplyr::n_distinct(xaxis$qtr)), y = -ymax/6.25, 
+      ggplot2::annotate(geom = "text", x = c(1:dplyr::n_distinct(xaxis$qtr)), y = -ymax/6.25, 
                label = xlabel, 
                size = 4) +
-      scale_x_discrete(labels = qtr_label(unique(xaxis$qtr))) +
-      geom_segment(
+      ggplot2::scale_x_discrete(labels = qtr_label(unique(xaxis$qtr))) +
+      ggplot2::geom_segment(
         data = tibble(),
         mapping = aes(x=seq(1, dplyr::n_distinct(xaxis$qtr), 4),
                       y=rep(0, dplyr::n_distinct(xaxis$fin_yr)),
