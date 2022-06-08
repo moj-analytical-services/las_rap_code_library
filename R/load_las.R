@@ -18,7 +18,7 @@
 #'
 #' @export
 
-load_las <- function(file = NULL, FUN = readr::read_csv, choose_scheme = all_scheme, choose_cat = all_cat) {
+load_las <- function(file = NULL, fun = read.csv, choose_scheme = all_scheme, choose_cat = all_cat) {
   
   # This collects the name of the latest LAS CSV
   allCSVs <- botor::s3_ls('s3://alpha-legal-aid-statistics-team')$key
@@ -44,7 +44,7 @@ load_las <- function(file = NULL, FUN = readr::read_csv, choose_scheme = all_sch
     ## Read from s3 bucket
     file <- latest_CSV
     file_path <- paste0("s3://alpha-legal-aid-statistics-team/", file)
-    output <- botor::s3_read(file_path, FUN)
+    output <- botor::s3_read(file_path, fun)
     
     ## Remove excess columns
     output <- output[, 1:20]
@@ -73,7 +73,7 @@ load_las <- function(file = NULL, FUN = readr::read_csv, choose_scheme = all_sch
   {
     ## Read from s3 bucket
     file_path <- paste0("s3://alpha-legal-aid-statistics-team/", file)
-    output <- botor::s3_read(file_path, FUN)
+    output <- botor::s3_read(file_path, fun)
     
     ## Remove excess columns
     output <- output[, 1:20]

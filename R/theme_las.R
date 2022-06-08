@@ -20,8 +20,7 @@
 #' @export
 
 theme_las <- function(base_size = 15, base_line_size = 0.5, flipped = FALSE, xticks = FALSE, xlabel = FALSE,
-                      xangle = 90, legend.position = "none")
-{
+                      xangle = 90, legend.position = "none"){
   
   # Base theme object
   base_elements <- ggplot2::theme_grey(base_size = base_size, base_line_size = base_line_size) +
