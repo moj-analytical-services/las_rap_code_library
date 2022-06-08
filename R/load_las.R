@@ -18,7 +18,7 @@
 #'
 #' @export
 
-load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_cat) {
+load_las <- function(file = NULL, FUN = readr::read_csv, choose_scheme = all_scheme, choose_cat = all_cat) {
   
   # This collects the name of the latest LAS CSV
   allCSVs <- botor::s3_ls('s3://alpha-legal-aid-statistics-team')$key
@@ -38,14 +38,29 @@ load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_c
     stop("Please select valid scheme")
   }
   
+  ## Choose latest CSV
   else if(is.null(file))
   {
+    ## Read from s3 bucket
     file <- latest_CSV
-    file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- lasrap::s3_path_to_full_df(file_path)
+    file_path <- paste0("s3://alpha-legal-aid-statistics-team/", file)
+    output <- botor::s3_read(file_path, FUN)
+    
+    ## Remove excess columns
+    output <- output[, 1:20]
+    
+    ## Changing class of columns
+    output <- output %>%
+      dplyr::mutate(across(fin_yr:sub_cat6, as.character)) %>%
+      dplyr::mutate(across(volume:laa_portion, as.numeric))
+    
+    ## Filter to chosen scheme
     output <- dplyr::filter(output, scheme %in% choose_scheme)
+    
+    ## Collect distinct categories
     all_cat <- unique(output$category)
     
+    ## Check that chosen categories exist
     cat_exists <- is.element(choose_cat, all_cat)
   }
   
@@ -56,18 +71,32 @@ load_las <- function(file = NULL, choose_scheme = all_scheme, choose_cat = all_c
   
   else if(file %in% allCSVs)
   {
-    file_path <- paste0("alpha-legal-aid-statistics-team/", file)
-    output <- lasrap::s3_path_to_full_df(file_path)
+    ## Read from s3 bucket
+    file_path <- paste0("s3://alpha-legal-aid-statistics-team/", file)
+    output <- botor::s3_read(file_path, FUN)
+    
+    ## Remove excess columns
+    output <- output[, 1:20]
+    
+    ## Changing class of columns
+    output <- output %>%
+      dplyr::mutate(across(fin_yr:sub_cat6, as.character)) %>%
+      dplyr::mutate(across(volume:laa_portion, as.numeric))
+    
+    ## Filter to chosen scheme
     output <- dplyr::filter(output, scheme %in% choose_scheme)
+    
+    ## Collect distinct categories
     all_cat <- unique(output$category)
     
+    ## Check that chosen categories exist
     cat_exists <- is.element(choose_cat, all_cat)
   }
   
   else 
   {stop("Please enter either NULL or the name of a CSV that is in the AWS bucket")}
   
-  
+  ## Gives error message if chosen categories do not exist
   if(is.element("FALSE", cat_exists)){
     stop("Please select correct category")
   }
