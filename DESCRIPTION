@@ -1,7 +1,7 @@
 Package: lasrap
 Type: Package
 Title: Functions used for legal aid statistics publications and R Shiny apps
-Version: 0.3.03
+Version: 0.3.04
 Author: Legal Aid Statistics Team
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: This package has functions that are used for legal aid statistics publications and R Shiny apps. Functions include value(), value_change() or load_las().
