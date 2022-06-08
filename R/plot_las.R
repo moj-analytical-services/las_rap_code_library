@@ -141,7 +141,7 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
                label = xlabel, 
                size = 4) +
       
-      ggplot2::scale_x_discrete(labels = qtr_label(unique(xaxis$qtr))) +
+      ggplot2::scale_x_discrete(labels = lasrap::qtr_label(unique(xaxis$qtr))) +
       
       ggplot2::geom_segment(
         data = tibble(),
@@ -176,7 +176,7 @@ plot_las <- function(df, yr_or_qtr = "qtr", volval, ylabel, ymax, intervals, leg
       ggplot2::annotate(geom = "text", x = c(1:dplyr::n_distinct(xaxis$qtr)), y = -ymax/6.25, 
                label = xlabel, 
                size = 4) +
-      ggplot2::scale_x_discrete(labels = qtr_label(unique(xaxis$qtr))) +
+      ggplot2::scale_x_discrete(labels = lasrap::qtr_label(unique(xaxis$qtr))) +
       ggplot2::geom_segment(
         data = tibble(),
         mapping = aes(x=seq(1, dplyr::n_distinct(xaxis$qtr), 4),
