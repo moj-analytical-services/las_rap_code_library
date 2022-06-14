@@ -26,22 +26,23 @@ value <- function (tibble, reference_date, volval) {
   tibble2 <- dplyr::summarize(group, volval = sum(!!volval2, na.rm = TRUE))
 
   if      (reference_date == "current")    {
-    as.double(tibble2 %>% dplyr::filter(qtr == quarter1) %>% dplyr::select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter1) %>% dplyr::select(volval)) %>% tidyr::replace_na(0)
     # sum(tibble2[tibble2 == quarter1,volval])
     }
   else if (reference_date == "previous_q") {
-    as.double(tibble2 %>% dplyr::filter(qtr == quarter2) %>% dplyr::select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter2) %>% dplyr::select(volval)) %>% tidyr::replace_na(0)
     # sum(tibble2[tibble2 == quarter2])
     }
   else if (reference_date == "previous_y") {
-    as.double(tibble2 %>% dplyr::filter(qtr == quarter3) %>% dplyr::select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter3) %>% dplyr::select(volval)) %>% tidyr::replace_na(0)
     # sum(tibble2[tibble2 == quarter3])
   }
   else if (reference_date == "whole_yr") {
-    as.double(tibble2 %>% dplyr::filter(qtr == quarter1) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter2) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter3ago) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter4ago) %>% dplyr::select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter1) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter2) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter3ago) %>% dplyr::select(volval))+as.double(tibble2 %>% dplyr::filter(qtr == quarter4ago) %>% dplyr::select(volval))  %>% 
+      tidyr::replace_na(0)
   }
   else if (reference_date == "previous_2y") {
-    as.double(tibble2 %>% dplyr::filter(qtr == quarter5) %>% dplyr::select(volval))
+    as.double(tibble2 %>% dplyr::filter(qtr == quarter5) %>% dplyr::select(volval)) %>% tidyr::replace_na(0)
     # sum(tibble2[tibble2 == quarter3])
   }
   else    print(
