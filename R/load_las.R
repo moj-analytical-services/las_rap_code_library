@@ -17,6 +17,8 @@
 #' @return Data from las CSVs
 #'
 #' @export
+#' 
+library(dplyr)
 
 load_las <- function(file = NULL, fun = read.csv, choose_scheme = all_scheme, choose_cat = all_cat) {
   
