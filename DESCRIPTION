@@ -19,5 +19,6 @@ Imports:
     scales,
     ggrepel,
     ggplot2,
+    tidyr,
     mojrap,
     mojchart
