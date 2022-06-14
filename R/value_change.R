@@ -36,7 +36,7 @@ value_change <- function (tibble, reference_date, type, format, volval) {
     out <- (value1 - value2)
     }
   else if (type == "perc_diff") {
-    out <- ( (value1 - value2) / value2)
+    out <- ifelse(value2 == 0, 1, ( (value1 - value2) / value2))
     }
   else
     print("Please enter a type as 'value', diff' or perc_diff'" )
