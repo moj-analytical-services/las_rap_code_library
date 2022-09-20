@@ -46,40 +46,40 @@ incdecsyn <- function(value, tense) {
     value <- as.numeric(value) # converts strings into a number
     
     if (tense == "present") {
-      if (value > 0.5) {
+      if (value > 0) {
         sample((c("up by", "rising by", "increasing by")),1)
       }
-      else if (value < 0.5) {
+      else if (value < 0) {
         sample((c("falling by", "down by", "decreasing by")),1)
       }
       else stop("ERROR")
     }
     
     else if (tense == "past") {
-      if (value > 0.5) {
+      if (value > 0) {
         sample((c("was up by", "has risen by", "increased by")),1)
       }
-      else if (value < 0.5) {
+      else if (value < 0) {
         sample((c("has fallen by", "is down by", "decreased by")),1)
       }
       else ("was unchanged")
     }
     
     else if (tense == "singular") {
-      if (value > 0.5) {
+      if (value > 0) {
         "increase"
       }
-      else if (value < 0.5) {
+      else if (value < 0) {
         sample((c("fall", "drop", "decrease")),1)
       }
       else stop("ERROR")
     }
     
     else if (tense == "plural") {
-      if (value > 0.5) {
+      if (value > 0) {
         "increases"
       }
-      else if (value < 0.5) {
+      else if (value < 0) {
         "decreases"
       }
       else stop("ERROR")
