@@ -52,7 +52,7 @@ incdecsyn <- function(value, tense) {
       else if (value < 0) {
         sample((c("falling by", "down by", "decreasing by")),1)
       }
-      else stop("ERROR")
+      else ("remaining unchanged")
     }
     
     else if (tense == "past") {
@@ -72,7 +72,7 @@ incdecsyn <- function(value, tense) {
       else if (value < 0) {
         sample((c("fall", "drop", "decrease")),1)
       }
-      else stop("ERROR")
+      else ("no change")
     }
     
     else if (tense == "plural") {
@@ -82,7 +82,7 @@ incdecsyn <- function(value, tense) {
       else if (value < 0) {
         "decreases"
       }
-      else stop("ERROR")
+      else ("no changes")
     }
     
   }
