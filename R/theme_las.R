@@ -9,6 +9,7 @@
 #' @param xlabel Whether to include title of x-axis
 #' @param xangle Angle of x-axis labels
 #' @param legend.position Position of legend in the graph
+#' @param axis.title Whether to include axis titles 
 #
 #' @examples
 #' theme_las() gives the default theme of LAS graphs
@@ -20,15 +21,22 @@
 #' @export
 
 theme_las <- function(base_size = 15, base_line_size = 0.5, flipped = FALSE, xticks = FALSE, xlabel = FALSE,
-                      xangle = 90, legend.position = "none"){
+                      xangle = 90, legend.position = "none", axis.title = "N"){
   
+  axis.title <- if(axis.title == "Y")
+  {
+    ggplot2::element_text(angle = 0, size = 12, family = "Arial")
+  }
+  else {ggplot2::element_blank()}
+  
+
   # Base theme object
   base_elements <- ggplot2::theme_grey(base_size = base_size, base_line_size = base_line_size) +
     ggplot2::theme(line = ggplot2::element_line(colour = "grey80"),
           panel.grid = ggplot2::element_blank(),
           axis.ticks = ggplot2::element_blank(),
           axis.ticks.length = unit(0.5, "lines"),
-          axis.title = ggplot2::element_blank(), 
+          axis.title = axis.title, 
           panel.background = ggplot2::element_blank(),
           axis.text.x = ggplot2::element_text(angle = xangle, size = 13, family = "Arial"),
           axis.text.y = ggplot2::element_text(angle = 0, size = 12, family = "Arial"),
