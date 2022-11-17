@@ -43,8 +43,8 @@ decimal_to_word <- function(decimal){
         decimal < 0.6 ~ "just less than two thirds ",
         decimal < 0.7 ~ "around two thirds",
         decimal < 0.8 ~ "around three quarters " ,
-        decimal <= 0.9 ~ "over three quarters ",
-        decimal > 0.9 ~ "Almost all "
+        decimal < 0.9 ~ "over three quarters ",
+        decimal >= 0.9 ~ "Almost all "
       )
       
     }
