@@ -59,7 +59,7 @@ theme_las <- function(base_size = 15, base_line_size = 0.5, flipped = FALSE, xti
   
   # To add for regular orientation
   regular_elements <- ggplot2::theme(
-    plot.margin = unit(c(1, 1, 4, 1), "lines"),
+    plot.margin = unit(c(1, 3, 4, 1), "lines"),
     panel.grid.major.y = ggplot2::element_line(),
     axis.line.x = ggplot2::element_line()
   )
