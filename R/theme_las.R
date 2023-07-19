@@ -35,7 +35,7 @@ theme_las <- function(base_size = 15, base_line_size = 0.5, flipped = FALSE, xti
     ggplot2::theme(line = ggplot2::element_line(colour = "grey80"),
           panel.grid = ggplot2::element_blank(),
           axis.ticks = ggplot2::element_blank(),
-          axis.ticks.length = unit(0.5, "lines"),
+          axis.ticks.length = ggplot2::unit(0.5, "lines"),
           axis.title = axis.title, 
           panel.background = ggplot2::element_blank(),
           axis.text.x = ggplot2::element_text(angle = xangle, size = 13, family = "Arial"),
@@ -44,14 +44,14 @@ theme_las <- function(base_size = 15, base_line_size = 0.5, flipped = FALSE, xti
           legend.position = legend.position,
           legend.title = ggplot2::element_blank(),
           legend.key = ggplot2::element_blank(),
-          legend.key.size = unit(1.5, "lines"),
+          legend.key.size = ggplot2::unit(1.5, "lines"),
           legend.text=ggplot2::element_text(size=15),
           plot.title = ggplot2::element_text(face = "bold", angle = 0, vjust = 2, size = base_size),
           plot.subtitle = ggplot2::element_text(margin = margin(b = 10)),
           plot.caption = ggplot2::element_text(hjust = 0, margin = margin(t = 10)),
           plot.title.position = "plot",
           plot.caption.position = "plot",
-          panel.spacing = unit(1, "lines"),
+          panel.spacing = ggplot2::unit(1, "lines"),
           strip.background = ggplot2::element_blank(),
           strip.text = ggplot2::element_text(face = "bold")
     )
@@ -59,7 +59,7 @@ theme_las <- function(base_size = 15, base_line_size = 0.5, flipped = FALSE, xti
   
   # To add for regular orientation
   regular_elements <- ggplot2::theme(
-    plot.margin = unit(c(1, 3, 4, 1), "lines"),
+    plot.margin = ggplot2::unit(c(1, 3, 4, 1), "lines"),
     panel.grid.major.y = ggplot2::element_line(),
     axis.line.x = ggplot2::element_line()
   )
